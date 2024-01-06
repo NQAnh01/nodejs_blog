@@ -1,0 +1,91 @@
+<a href='/me/stored/courses' style='text-decoration: none;'>Khóa học của tôi</a>
+<h2>Khóa học đã xóa</h2>
+<table class='table'>
+  <thead>
+    <tr>
+      <th scope='col'>STT</th>
+      <th scope='col'>Tên khóa học</th>
+      <th scope='col'>Trình độ</th>
+      <th scope='col'>Ngày xóa</th>
+      <th scope='col'></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each courses}}
+      <tr>
+        <th scope='row'>{{sum @index 1}}</th>
+        <td><a
+            href='/courses/{{this.slug}}'
+            style='text-decoration: none; color:black;'
+          >{{this.name}}</a></td>
+        <td>{{this.level}}</td>
+        <td>{{this.deletedAt}}</td>
+        <td>
+          <a
+            href=''
+            class='btn btn-link btn-restore'
+            style='text-decoration: none; color:black;'
+            data-id='{{this._id}}'
+          >Khôi phục</a>
+          <a
+            href='#'
+            class='btn btn-link'
+            style='text-decoration: none; color:black;'
+            data-bs-toggle='modal'
+            data-bs-target='#destroy-courses'
+            data-id='{{this._id}}'
+          >Xóa vĩnh viễn</a>
+        </td>
+      </tr>
+    {{else}}
+      <tr>
+        <td colspan='5' class='text-center'>
+          Không có khóa học nào được xóa.
+          <a href='/me/stored/courses'>khóa học của tôi</a>
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+<div>
+</div>
+
+<!-- Delete-courses modal -->
+<div
+  class='modal fade'
+  id='destroy-courses'
+  tabindex='-1'
+  aria-labelledby='exampleModalLabel'
+  aria-hidden='true'
+>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <h1 class='modal-title fs-5' id='exampleModalLabel'>Xóa vĩnh viễn khóa học?</h1>
+        <button
+          type='button'
+          class='btn-close'
+          data-bs-dismiss='modal'
+          aria-label='Close'
+        ></button>
+      </div>
+      <div class='modal-body'>
+        Bạn xác nhận xóa khóa học đã chọn?
+      </div>
+      <div class='modal-footer'>
+        <button
+          type='button'
+          class='btn btn-secondary'
+          data-bs-dismiss='modal'
+        >Hủy</button>
+        <button type='button' id='btn-destroy-course' class='btn btn-danger'>Xóa bỏ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form name='destroy-course-form' method='POST'></form>
+<form name='restore-course-form' method='POST'></form>
+
+<script src='https://code.jquery.com/jquery-3.7.1.min.js'></script>
+<script src='/js/scriptTrash.js'></script>

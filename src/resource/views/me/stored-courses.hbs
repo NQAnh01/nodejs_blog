@@ -1,0 +1,129 @@
+<form name="container-form" method="POST" action="/courses/handle-form-actions">
+  <div>
+    <h2>Khóa học của tôi</h2>
+    <div class='form-check d-flex align-items-center' style='margin: 0 8px;'>
+      <div style='margin-right: 8px;'>
+        <input class='form-check-input' type='checkbox' value='' id='checkbox-all' />
+        <label class='form-check-label' for='checkbox-all'>
+          Chọn tất cả
+        </label>
+      </div>
+
+      <select class='form-select form-select-sm' style='width: 160px;' name="action">
+        <option value="" selected>-- Lựa chọn --</option>
+        <option value='delete'>Xóa</option>
+        <option value='public'>Công khai</option>
+        <option value='private'>Riêng tư</option>
+      </select>
+
+      <button
+        type='submit'
+        class='btn btn-primary btn-sm btn-check-all-submit disabled'
+      >Lưu</button>
+    </div>
+  </div>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th scope='col' colspan='2'>
+          STT
+        </th>
+        <th scope='col'>
+          <a href="?_sort&column=name&type=desc" style="text-decoration: none; color: black;">
+            Tên khóa học <i class="bi bi-funnel"></i>
+          </a>
+        </th>
+        <th scope='col'>Trình độ</th>
+        <th scope='col'>Ngày bắt đầu</th>
+        <th scope='col'></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each courses}}
+        <tr>
+          <td>
+            <div class="form-check">
+            <input
+              class='form-check-input'
+              type='checkbox'
+              name='courseId[]'
+              id='{{this._id}}'
+              value="{{this._id}}"
+            /></td>
+            </div>
+          <td scope='row'>{{sum @index 1}}</td>
+          <td><a
+              href='/courses/{{this.slug}}'
+              style='text-decoration: none; color:black;'
+            >{{this.name}}</a></td>
+          <td>{{this.level}}</td>
+          <td>{{this.createdAt}}</td>
+          <td>
+            <a
+              href='/courses/{{this._id}}/edit'
+              class='btn btn-link'
+              style='text-decoration: none; color:black;'
+            >Sửa</a>
+            <a
+              href='#'
+              class='btn btn-link'
+              style='text-decoration: none; color:black;'
+              data-bs-toggle='modal'
+              data-bs-target='#delete-courses'
+              data-id='{{this._id}}'
+            >Xóa</a>
+          </td>
+        </tr>
+      {{else}}
+        <tr>
+          <td colspan='5' class='text-center'>
+            Bạn chưa có khóa học nào.
+            <a href='/courses/create'>Tạo khóa học</a>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</form>
+<div>
+  <a href='/me/trash/courses' style='text-decoration: none;'>Thùng rác ({{this.deleteCount}})</a>
+</div>
+
+<!-- Delete-courses modal -->
+<div
+  class='modal fade'
+  id='delete-courses'
+  tabindex='-1'
+  aria-labelledby='exampleModalLabel'
+  aria-hidden='true'
+>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <h1 class='modal-title fs-5' id='exampleModalLabel'>Xóa khóa học?</h1>
+        <button
+          type='button'
+          class='btn-close'
+          data-bs-dismiss='modal'
+          aria-label='Close'
+        ></button>
+      </div>
+      <div class='modal-body'>
+        Bạn xác nhận xóa khóa học đã chọn?
+      </div>
+      <div class='modal-footer'>
+        <button
+          type='button'
+          class='btn btn-secondary'
+          data-bs-dismiss='modal'
+        >Hủy</button>
+        <button type='button' id='btn-delete-course' class='btn btn-danger'>Xóa bỏ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form name='delete-course-form' method='POST'></form>
+
+<script src='https://code.jquery.com/jquery-3.7.1.min.js'></script>
+<script src='/js/snippets.js'></script>
