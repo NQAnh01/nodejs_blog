@@ -18,7 +18,6 @@ if (destroyModal) {
     const button = event.relatedTarget;
     // Extract info from data-bs-* attributes
     courseId = button.getAttribute('data-id');
-    console.log(courseId);
   });
 }
 

@@ -19,22 +19,21 @@
       <button
         type='submit'
         class='btn btn-primary btn-sm btn-check-all-submit disabled'
-      >Lưu</button>
+      >Lưu lại</button>
     </div>
   </div>
   <table class='table'>
     <thead>
       <tr>
-        <th scope='col' colspan='2'>
-          STT
+        <th></th>
+        <th scope='col'>
+          ID {{{sortable '_id' _sort}}}
         </th>
         <th scope='col'>
-          <a href="?_sort&column=name&type=desc" style="text-decoration: none; color: black;">
-            Tên khóa học <i class="bi bi-funnel"></i>
-          </a>
+            Tên khóa học {{{sortable 'name' _sort}}}
         </th>
-        <th scope='col'>Trình độ</th>
-        <th scope='col'>Ngày bắt đầu</th>
+        <th scope='col'>Trình độ {{{sortable 'level' _sort}}}</th>
+        <th scope='col'>Ngày bắt đầu {{{sortable 'createdAt' _sort}}}</th>
         <th scope='col'></th>
       </tr>
     </thead>
@@ -51,7 +50,7 @@
               value="{{this._id}}"
             /></td>
             </div>
-          <td scope='row'>{{sum @index 1}}</td>
+          <td> {{this._id}}</td>
           <td><a
               href='/courses/{{this.slug}}'
               style='text-decoration: none; color:black;'
